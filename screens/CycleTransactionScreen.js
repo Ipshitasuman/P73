@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import * as Permissions from "expo-permissions";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import * as firebase from "firebase";
+import firebase from "firebase";
 import db from "../config.js";
+import * as Font from "expo-font";
 
 export default class TransactionScreen extends React.Component {
   constructor() {
@@ -23,9 +24,25 @@ export default class TransactionScreen extends React.Component {
       scannedCycleId: "",
       scannedStudentId: "",
       buttonState: "normal",
-      transactionMessage: ""
+      transactionMessage: "",
+      fontLoaded: false
     };
   }
+
+  // async loadFonts() {
+  //   await Font.loadAsync({
+  //     Angelina regular: require(" "),
+  //    April Blossom: require(" "),
+  //    Bargain script: require(" "),
+  //    Cheri Liney: require(" "),
+  //   Chocolate: require(" "),
+  //   });
+  //   this.setState({ fontLoaded: true });
+  // }
+
+  // componentDidMount() {
+  //   this.loadFonts();
+  // }
 
   getCameraPermissions = async id => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -71,12 +88,12 @@ export default class TransactionScreen extends React.Component {
     //   transactionType: "Issue"
     // });
 
-    // db.collection("transactions").add({
-    //   studentId: this.state.scannedStudentId,
-    //   cycleId: this.state.scannedCycleId,
-    //   date: firebase.firestore.Timestamp.now().toDate(),
-    //   transactionType: "Issue"
-    // });
+    db.collection("transactions").add({
+      studentId: this.state.scannedStudentId,
+      cycleId: this.state.scannedCycleId,
+      date: firebase.firestore.Timestamp.now().toDate(),
+      transactionType: "Issue"
+    });
 
     // db.collection("transactions").({
     //   studentId: this.state.scannedStudentId;
@@ -150,10 +167,10 @@ export default class TransactionScreen extends React.Component {
     //   scannedCycleId: 
     // });
 
-    // this.setState({
-    //   scannedStudentId: "",
-    //   scannedCycleId: ""
-    // });
+    this.setState({
+      scannedStudentId: "",
+      scannedCycleId: ""
+    });
 
      // this.state({
     //   scannedStudentId: "",
