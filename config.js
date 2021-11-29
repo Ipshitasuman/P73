@@ -1,6 +1,6 @@
 import firebase from 'firebase'
-require('@firebase/firestore')
-import "firebase/auth";
+// require('@firebase/firestore')
+// import "firebase/auth";
 
   var firebaseConfig = {
 
